@@ -1,0 +1,566 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.eurekaconsumer.dao.ScheduleStatisticOrderRefundMapper">
+    <resultMap type="com.example.eurekaconsumer.entity.ScheduleStatisticOrderRefund" id="ScheduleStatisticOrderRefundMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="refundDetailId" column="refund_detail_id" jdbcType="VARCHAR"/>
+        <result property="orderId" column="order_id" jdbcType="INTEGER"/>
+        <result property="refundId" column="refund_id" jdbcType="VARCHAR"/>
+        <result property="externalCatId" column="external_cat_id" jdbcType="INTEGER"/>
+        <result property="externalGoodsId" column="external_goods_id" jdbcType="INTEGER"/>
+        <result property="goodsSize" column="goods_size" jdbcType="VARCHAR"/>
+        <result property="goodsColor" column="goods_color" jdbcType="VARCHAR"/>
+        <result property="orderSn" column="order_sn" jdbcType="VARCHAR"/>
+        <result property="uniqSku" column="uniq_sku" jdbcType="VARCHAR"/>
+        <result property="taobaoOrderSn" column="taobao_order_sn" jdbcType="VARCHAR"/>
+        <result property="refundCreateStamp" column="refund_create_stamp" jdbcType="TIMESTAMP"/>
+        <result property="refundExecuteDate" column="refund_execute_date" jdbcType="TIMESTAMP"/>
+        <result property="level1Reason" column="level1_reason" jdbcType="VARCHAR"/>
+        <result property="level2Reason" column="level2_reason" jdbcType="VARCHAR"/>
+        <result property="level3Reason" column="level3_reason" jdbcType="VARCHAR"/>
+        <result property="refundDepType" column="refund_dep_type" jdbcType="VARCHAR"/>
+        <result property="refundAmount" column="refund_amount" jdbcType="NUMERIC"/>
+        <result property="refundOrderStatus" column="refund_order_status" jdbcType="VARCHAR"/>
+        <result property="regionName" column="region_name" jdbcType="VARCHAR"/>
+        <result property="orderTime" column="order_time" jdbcType="TIMESTAMP"/>
+        <result property="shippingTime" column="shipping_time" jdbcType="TIMESTAMP"/>
+        <result property="orderGoodsId" column="order_goods_id" jdbcType="VARCHAR"/>
+        <result property="isDispatch" column="is_dispatch" jdbcType="INTEGER"/>
+        <result property="refundGoodsNumber" column="refund_goods_number" jdbcType="INTEGER"/>
+        <result property="hasImage" column="has_image" jdbcType="VARCHAR"/>
+        <result property="refundType" column="refund_type" jdbcType="VARCHAR"/>
+        <result property="providerId" column="provider_id" jdbcType="INTEGER"/>
+        <result property="purchaseSn" column="purchase_sn" jdbcType="VARCHAR"/>
+        <result property="facilityId" column="facility_id" jdbcType="VARCHAR"/>
+        <result property="partyId" column="party_id" jdbcType="VARCHAR"/>
+        <result property="fromDomain" column="from_domain" jdbcType="VARCHAR"/>
+        <result property="sourceId" column="source_id" jdbcType="INTEGER"/>
+        <result property="currency" column="currency" jdbcType="VARCHAR"/>
+        <result property="goodsPrice" column="goods_price" jdbcType="NUMERIC"/>
+        <result property="regionId" column="region_id" jdbcType="INTEGER"/>
+        <result property="isNewGoods" column="is_new_goods" jdbcType="INTEGER"/>
+        <result property="email" column="email" jdbcType="VARCHAR"/>
+    </resultMap>
+    <resultMap type="com.example.eurekaconsumer.dto.DispatchRefundData" id="dispatchRefundData">
+        <result property="dispatchSn" column="dispatch_sn"  jdbcType="VARCHAR"/>
+        <result property="dayRefundGoodsNumber30" column="day_refund_goods_number30" jdbcType="INTEGER"/>
+        <result property="dayRefundGoodsNumber60" column="day_refund_goods_number60" jdbcType="INTEGER"/>
+        <result property="dayRefundGoodsNumber90" column="day_refund_goods_number90" jdbcType="INTEGER"/>
+    </resultMap>
+    <resultMap type="com.example.eurekaconsumer.dto.PurchaseRefundData" id="purchaseRefundData">
+        <result property="orderSn" column="order_sn"  jdbcType="VARCHAR"/>
+        <result property="dayRefundGoodsNumber30" column="day_refund_goods_number30" jdbcType="INTEGER"/>
+        <result property="dayRefundGoodsNumber60" column="day_refund_goods_number60" jdbcType="INTEGER"/>
+        <result property="dayRefundGoodsNumber90" column="day_refund_goods_number90" jdbcType="INTEGER"/>
+    </resultMap>
+    <!--查询单个-->
+    <select id="queryById" resultMap="ScheduleStatisticOrderRefundMap">
+        select
+          id, refund_detail_id, order_id, refund_id, external_cat_id, external_goods_id, goods_size, goods_color, order_sn, uniq_sku, taobao_order_sn, refund_create_stamp, refund_execute_date, level1_reason, level2_reason, level3_reason, refund_dep_type, refund_amount, refund_order_status, region_name, order_time, shipping_time, order_goods_id, is_dispatch, refund_goods_number, has_image, refund_type, provider_id, purchase_sn, facility_id, party_id, from_domain, source_id, currency, goods_price, region_id, is_new_goods, email
+        from schedule_statistic_order_refund
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="ScheduleStatisticOrderRefundMap">
+        select
+          id, refund_detail_id, order_id, refund_id, external_cat_id, external_goods_id, goods_size, goods_color, order_sn, uniq_sku, taobao_order_sn, refund_create_stamp, refund_execute_date, level1_reason, level2_reason, level3_reason, refund_dep_type, refund_amount, refund_order_status, region_name, order_time, shipping_time, order_goods_id, is_dispatch, refund_goods_number, has_image, refund_type, provider_id, purchase_sn, facility_id, party_id, from_domain, source_id, currency, goods_price, region_id, is_new_goods, email
+        from schedule_statistic_order_refund
+        <where>
+            <if test="orderRefund.id != null">
+                and id = #{id}
+            </if>
+            <if test="orderRefund.refundDetailId != null and orderRefund.refundDetailId != ''">
+                and refund_detail_id = #{refundDetailId}
+            </if>
+            <if test="orderRefund.orderId != null">
+                and order_id = #{orderRefund.orderId}
+            </if>
+            <if test="orderRefund.refundId != null and orderRefund.refundId != ''">
+                and refund_id = #{refundId}
+            </if>
+            <if test="orderRefund.externalCatId != null">
+                and external_cat_id = #{orderRefund.externalCatId}
+            </if>
+            <if test="orderRefund.externalGoodsId != null">
+                and external_goods_id = #{orderRefund.externalGoodsId}
+            </if>
+            <if test="orderRefund.goodsSize != null and orderRefund.goodsSize != ''">
+                and goods_size = #{orderRefund.goodsSize}
+            </if>
+            <if test="orderRefund.goodsColor != null and orderRefund.goodsColor != ''">
+                and goods_color = #{orderRefund.goodsColor}
+            </if>
+            <if test="orderRefund.orderSn != null and orderRefund.orderSn != ''">
+                and order_sn = #{orderRefund.orderSn}
+            </if>
+            <if test="orderRefund.uniqSku != null and orderRefund.uniqSku != ''">
+                and uniq_sku = #{orderRefund.uniqSku}
+            </if>
+            <if test="orderRefund.taobaoOrderSn != null and orderRefund.taobaoOrderSn != ''">
+                and taobao_order_sn = #{orderRefund.taobaoOrderSn}
+            </if>
+            <if test="orderRefund.refundCreateStamp != null">
+                and refund_create_stamp = #{orderRefund.refundCreateStamp}
+            </if>
+            <if test="orderRefund.refundExecuteDate != null">
+                and refund_execute_date = #{orderRefund.refundExecuteDate}
+            </if>
+            <if test="orderRefund.level1Reason != null and orderRefund.level1Reason != ''">
+                and level1_reason = #{orderRefund.level1Reason}
+            </if>
+            <if test="orderRefund.level2Reason != null and orderRefund.level2Reason != ''">
+                and level2_reason = #{orderRefund.level2Reason}
+            </if>
+            <if test="orderRefund.level3Reason != null and orderRefund.level3Reason != ''">
+                and level3_reason = #{orderRefund.level3Reason}
+            </if>
+            <if test="orderRefund.refundDepType != null and orderRefund.refundDepType != ''">
+                and refund_dep_type = #{orderRefund.refundDepType}
+            </if>
+            <if test="orderRefund.refundAmount != null">
+                and refund_amount = #{orderRefund.refundAmount}
+            </if>
+            <if test="orderRefund.refundOrderStatus != null and orderRefund.refundOrderStatus != ''">
+                and refund_order_status = #{orderRefund.refundOrderStatus}
+            </if>
+            <if test="orderRefund.regionName != null and orderRefund.regionName != ''">
+                and region_name = #{orderRefund.regionName}
+            </if>
+            <if test="orderRefund.orderTime != null">
+                and order_time = #{orderRefund.orderTime}
+            </if>
+            <if test="orderRefund.shippingTime != null">
+                and shipping_time = #{orderRefund.shippingTime}
+            </if>
+            <if test="orderRefund.orderGoodsId != null and orderRefund.orderGoodsId != ''">
+                and order_goods_id = #{orderRefund.orderGoodsId}
+            </if>
+            <if test="orderRefund.isDispatch != null">
+                and is_dispatch = #{orderRefund.isDispatch}
+            </if>
+            <if test="orderRefund.refundGoodsNumber != null">
+                and refund_goods_number = #{orderRefund.refundGoodsNumber}
+            </if>
+            <if test="orderRefund.hasImage != null and orderRefund.hasImage != ''">
+                and has_image = #{orderRefund.hasImage}
+            </if>
+            <if test="orderRefund.refundType != null and orderRefund.refundType != ''">
+                and refund_type = #{orderRefund.refundType}
+            </if>
+            <if test="orderRefund.providerId != null">
+                and provider_id = #{orderRefund.providerId}
+            </if>
+            <if test="orderRefund.purchaseSn != null and orderRefund.purchaseSn != ''">
+                and purchase_sn = #{orderRefund.purchaseSn}
+            </if>
+            <if test="orderRefund.facilityId != null and orderRefund.facilityId != ''">
+                and facility_id = #{orderRefund.facilityId}
+            </if>
+            <if test="orderRefund.partyId != null and orderRefund.partyId != ''">
+                and party_id = #{orderRefund.partyId}
+            </if>
+            <if test="orderRefund.fromDomain != null and orderRefund.fromDomain != ''">
+                and from_domain = #{orderRefund.fromDomain}
+            </if>
+            <if test="orderRefund.sourceId != null">
+                and source_id = #{orderRefund.sourceId}
+            </if>
+            <if test="orderRefund.currency != null and orderRefund.currency != ''">
+                and currency = #{orderRefund.currency}
+            </if>
+            <if test="orderRefund.goodsPrice != null">
+                and goods_price = #{orderRefund.goodsPrice}
+            </if>
+            <if test="orderRefund.regionId != null">
+                and region_id = #{orderRefund.regionId}
+            </if>
+            <if test="orderRefund.isNewGoods != null">
+                and is_new_goods = #{orderRefund.isNewGoods}
+            </if>
+            <if test="email != null and email != ''">
+                and email = #{orderRefund.email}
+            </if>
+        </where>
+        limit #{pageable.offset}, #{pageable.pageSize}
+    </select>
+
+    <!--统计总行数-->
+    <select id="count" resultType="java.lang.Long">
+        select count(1)
+        from schedule_statistic_order_refund
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="refundDetailId != null and refundDetailId != ''">
+                and refund_detail_id = #{refundDetailId}
+            </if>
+            <if test="orderId != null">
+                and order_id = #{orderId}
+            </if>
+            <if test="refundId != null and refundId != ''">
+                and refund_id = #{refundId}
+            </if>
+            <if test="externalCatId != null">
+                and external_cat_id = #{externalCatId}
+            </if>
+            <if test="externalGoodsId != null">
+                and external_goods_id = #{externalGoodsId}
+            </if>
+            <if test="goodsSize != null and goodsSize != ''">
+                and goods_size = #{goodsSize}
+            </if>
+            <if test="goodsColor != null and goodsColor != ''">
+                and goods_color = #{goodsColor}
+            </if>
+            <if test="orderSn != null and orderSn != ''">
+                and order_sn = #{orderSn}
+            </if>
+            <if test="uniqSku != null and uniqSku != ''">
+                and uniq_sku = #{uniqSku}
+            </if>
+            <if test="taobaoOrderSn != null and taobaoOrderSn != ''">
+                and taobao_order_sn = #{taobaoOrderSn}
+            </if>
+            <if test="refundCreateStamp != null">
+                and refund_create_stamp = #{refundCreateStamp}
+            </if>
+            <if test="refundExecuteDate != null">
+                and refund_execute_date = #{refundExecuteDate}
+            </if>
+            <if test="level1Reason != null and level1Reason != ''">
+                and level1_reason = #{level1Reason}
+            </if>
+            <if test="level2Reason != null and level2Reason != ''">
+                and level2_reason = #{level2Reason}
+            </if>
+            <if test="level3Reason != null and level3Reason != ''">
+                and level3_reason = #{level3Reason}
+            </if>
+            <if test="refundDepType != null and refundDepType != ''">
+                and refund_dep_type = #{refundDepType}
+            </if>
+            <if test="refundAmount != null">
+                and refund_amount = #{refundAmount}
+            </if>
+            <if test="refundOrderStatus != null and refundOrderStatus != ''">
+                and refund_order_status = #{refundOrderStatus}
+            </if>
+            <if test="regionName != null and regionName != ''">
+                and region_name = #{regionName}
+            </if>
+            <if test="orderTime != null">
+                and order_time = #{orderTime}
+            </if>
+            <if test="shippingTime != null">
+                and shipping_time = #{shippingTime}
+            </if>
+            <if test="orderGoodsId != null and orderGoodsId != ''">
+                and order_goods_id = #{orderGoodsId}
+            </if>
+            <if test="isDispatch != null">
+                and is_dispatch = #{isDispatch}
+            </if>
+            <if test="refundGoodsNumber != null">
+                and refund_goods_number = #{refundGoodsNumber}
+            </if>
+            <if test="hasImage != null and hasImage != ''">
+                and has_image = #{hasImage}
+            </if>
+            <if test="refundType != null and refundType != ''">
+                and refund_type = #{refundType}
+            </if>
+            <if test="providerId != null">
+                and provider_id = #{providerId}
+            </if>
+            <if test="purchaseSn != null and purchaseSn != ''">
+                and purchase_sn = #{purchaseSn}
+            </if>
+            <if test="facilityId != null and facilityId != ''">
+                and facility_id = #{facilityId}
+            </if>
+            <if test="partyId != null and partyId != ''">
+                and party_id = #{partyId}
+            </if>
+            <if test="fromDomain != null and fromDomain != ''">
+                and from_domain = #{fromDomain}
+            </if>
+            <if test="sourceId != null">
+                and source_id = #{sourceId}
+            </if>
+            <if test="currency != null and currency != ''">
+                and currency = #{currency}
+            </if>
+            <if test="goodsPrice != null">
+                and goods_price = #{goodsPrice}
+            </if>
+            <if test="regionId != null">
+                and region_id = #{regionId}
+            </if>
+            <if test="isNewGoods != null">
+                and is_new_goods = #{isNewGoods}
+            </if>
+            <if test="email != null and email != ''">
+                and email = #{email}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into schedule_statistic_order_refund(refund_detail_id, order_id, refund_id, external_cat_id, external_goods_id, goods_size, goods_color, order_sn, uniq_sku, taobao_order_sn, refund_create_stamp, refund_execute_date, level1_reason, level2_reason, level3_reason, refund_dep_type, refund_amount, refund_order_status, region_name, order_time, shipping_time, order_goods_id, is_dispatch, refund_goods_number, has_image, refund_type, provider_id, purchase_sn, facility_id, party_id, from_domain, source_id, currency, goods_price, region_id, is_new_goods, email)
+        values (#{refundDetailId}, #{orderId}, #{refundId}, #{externalCatId}, #{externalGoodsId}, #{goodsSize}, #{goodsColor}, #{orderSn}, #{uniqSku}, #{taobaoOrderSn}, #{refundCreateStamp}, #{refundExecuteDate}, #{level1Reason}, #{level2Reason}, #{level3Reason}, #{refundDepType}, #{refundAmount}, #{refundOrderStatus}, #{regionName}, #{orderTime}, #{shippingTime}, #{orderGoodsId}, #{isDispatch}, #{refundGoodsNumber}, #{hasImage}, #{refundType}, #{providerId}, #{purchaseSn}, #{facilityId}, #{partyId}, #{fromDomain}, #{sourceId}, #{currency}, #{goodsPrice}, #{regionId}, #{isNewGoods}, #{email})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into schedule_statistic_order_refund(refund_detail_id, order_id, refund_id, external_cat_id, external_goods_id, goods_size, goods_color, order_sn, uniq_sku, taobao_order_sn, refund_create_stamp, refund_execute_date, level1_reason, level2_reason, level3_reason, refund_dep_type, refund_amount, refund_order_status, region_name, order_time, shipping_time, order_goods_id, is_dispatch, refund_goods_number, has_image, refund_type, provider_id, purchase_sn, facility_id, party_id, from_domain, source_id, currency, goods_price, region_id, is_new_goods, email)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.refundDetailId}, #{entity.orderId}, #{entity.refundId}, #{entity.externalCatId}, #{entity.externalGoodsId}, #{entity.goodsSize}, #{entity.goodsColor}, #{entity.orderSn}, #{entity.uniqSku}, #{entity.taobaoOrderSn}, #{entity.refundCreateStamp}, #{entity.refundExecuteDate}, #{entity.level1Reason}, #{entity.level2Reason}, #{entity.level3Reason}, #{entity.refundDepType}, #{entity.refundAmount}, #{entity.refundOrderStatus}, #{entity.regionName}, #{entity.orderTime}, #{entity.shippingTime}, #{entity.orderGoodsId}, #{entity.isDispatch}, #{entity.refundGoodsNumber}, #{entity.hasImage}, #{entity.refundType}, #{entity.providerId}, #{entity.purchaseSn}, #{entity.facilityId}, #{entity.partyId}, #{entity.fromDomain}, #{entity.sourceId}, #{entity.currency}, #{entity.goodsPrice}, #{entity.regionId}, #{entity.isNewGoods}, #{entity.email})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into schedule_statistic_order_refund(refund_detail_id, order_id, refund_id, external_cat_id, external_goods_id, goods_size, goods_color, order_sn, uniq_sku, taobao_order_sn, refund_create_stamp, refund_execute_date, level1_reason, level2_reason, level3_reason, refund_dep_type, refund_amount, refund_order_status, region_name, order_time, shipping_time, order_goods_id, is_dispatch, refund_goods_number, has_image, refund_type, provider_id, purchase_sn, facility_id, party_id, from_domain, source_id, currency, goods_price, region_id, is_new_goods, email)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.refundDetailId}, #{entity.orderId}, #{entity.refundId}, #{entity.externalCatId}, #{entity.externalGoodsId}, #{entity.goodsSize}, #{entity.goodsColor}, #{entity.orderSn}, #{entity.uniqSku}, #{entity.taobaoOrderSn}, #{entity.refundCreateStamp}, #{entity.refundExecuteDate}, #{entity.level1Reason}, #{entity.level2Reason}, #{entity.level3Reason}, #{entity.refundDepType}, #{entity.refundAmount}, #{entity.refundOrderStatus}, #{entity.regionName}, #{entity.orderTime}, #{entity.shippingTime}, #{entity.orderGoodsId}, #{entity.isDispatch}, #{entity.refundGoodsNumber}, #{entity.hasImage}, #{entity.refundType}, #{entity.providerId}, #{entity.purchaseSn}, #{entity.facilityId}, #{entity.partyId}, #{entity.fromDomain}, #{entity.sourceId}, #{entity.currency}, #{entity.goodsPrice}, #{entity.regionId}, #{entity.isNewGoods}, #{entity.email})
+        </foreach>
+        on duplicate key update
+        refund_detail_id = values(refund_detail_id),
+        order_id = values(order_id),
+        refund_id = values(refund_id),
+        external_cat_id = values(external_cat_id),
+        external_goods_id = values(external_goods_id),
+        goods_size = values(goods_size),
+        goods_color = values(goods_color),
+        order_sn = values(order_sn),
+        uniq_sku = values(uniq_sku),
+        taobao_order_sn = values(taobao_order_sn),
+        refund_create_stamp = values(refund_create_stamp),
+        refund_execute_date = values(refund_execute_date),
+        level1_reason = values(level1_reason),
+        level2_reason = values(level2_reason),
+        level3_reason = values(level3_reason),
+        refund_dep_type = values(refund_dep_type),
+        refund_amount = values(refund_amount),
+        refund_order_status = values(refund_order_status),
+        region_name = values(region_name),
+        order_time = values(order_time),
+        shipping_time = values(shipping_time),
+        order_goods_id = values(order_goods_id),
+        is_dispatch = values(is_dispatch),
+        refund_goods_number = values(refund_goods_number),
+        has_image = values(has_image),
+        refund_type = values(refund_type),
+        provider_id = values(provider_id),
+        purchase_sn = values(purchase_sn),
+        facility_id = values(facility_id),
+        party_id = values(party_id),
+        from_domain = values(from_domain),
+        source_id = values(source_id),
+        currency = values(currency),
+        goods_price = values(goods_price),
+        region_id = values(region_id),
+        is_new_goods = values(is_new_goods),
+        email = values(email)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update schedule_statistic_order_refund
+        <set>
+            <if test="refundDetailId != null and refundDetailId != ''">
+                refund_detail_id = #{refundDetailId},
+            </if>
+            <if test="orderId != null">
+                order_id = #{orderId},
+            </if>
+            <if test="refundId != null and refundId != ''">
+                refund_id = #{refundId},
+            </if>
+            <if test="externalCatId != null">
+                external_cat_id = #{externalCatId},
+            </if>
+            <if test="externalGoodsId != null">
+                external_goods_id = #{externalGoodsId},
+            </if>
+            <if test="goodsSize != null and goodsSize != ''">
+                goods_size = #{goodsSize},
+            </if>
+            <if test="goodsColor != null and goodsColor != ''">
+                goods_color = #{goodsColor},
+            </if>
+            <if test="orderSn != null and orderSn != ''">
+                order_sn = #{orderSn},
+            </if>
+            <if test="uniqSku != null and uniqSku != ''">
+                uniq_sku = #{uniqSku},
+            </if>
+            <if test="taobaoOrderSn != null and taobaoOrderSn != ''">
+                taobao_order_sn = #{taobaoOrderSn},
+            </if>
+            <if test="refundCreateStamp != null">
+                refund_create_stamp = #{refundCreateStamp},
+            </if>
+            <if test="refundExecuteDate != null">
+                refund_execute_date = #{refundExecuteDate},
+            </if>
+            <if test="level1Reason != null and level1Reason != ''">
+                level1_reason = #{level1Reason},
+            </if>
+            <if test="level2Reason != null and level2Reason != ''">
+                level2_reason = #{level2Reason},
+            </if>
+            <if test="level3Reason != null and level3Reason != ''">
+                level3_reason = #{level3Reason},
+            </if>
+            <if test="refundDepType != null and refundDepType != ''">
+                refund_dep_type = #{refundDepType},
+            </if>
+            <if test="refundAmount != null">
+                refund_amount = #{refundAmount},
+            </if>
+            <if test="refundOrderStatus != null and refundOrderStatus != ''">
+                refund_order_status = #{refundOrderStatus},
+            </if>
+            <if test="regionName != null and regionName != ''">
+                region_name = #{regionName},
+            </if>
+            <if test="orderTime != null">
+                order_time = #{orderTime},
+            </if>
+            <if test="shippingTime != null">
+                shipping_time = #{shippingTime},
+            </if>
+            <if test="orderGoodsId != null and orderGoodsId != ''">
+                order_goods_id = #{orderGoodsId},
+            </if>
+            <if test="isDispatch != null">
+                is_dispatch = #{isDispatch},
+            </if>
+            <if test="refundGoodsNumber != null">
+                refund_goods_number = #{refundGoodsNumber},
+            </if>
+            <if test="hasImage != null and hasImage != ''">
+                has_image = #{hasImage},
+            </if>
+            <if test="refundType != null and refundType != ''">
+                refund_type = #{refundType},
+            </if>
+            <if test="providerId != null">
+                provider_id = #{providerId},
+            </if>
+            <if test="purchaseSn != null and purchaseSn != ''">
+                purchase_sn = #{purchaseSn},
+            </if>
+            <if test="facilityId != null and facilityId != ''">
+                facility_id = #{facilityId},
+            </if>
+            <if test="partyId != null and partyId != ''">
+                party_id = #{partyId},
+            </if>
+            <if test="fromDomain != null and fromDomain != ''">
+                from_domain = #{fromDomain},
+            </if>
+            <if test="sourceId != null">
+                source_id = #{sourceId},
+            </if>
+            <if test="currency != null and currency != ''">
+                currency = #{currency},
+            </if>
+            <if test="goodsPrice != null">
+                goods_price = #{goodsPrice},
+            </if>
+            <if test="regionId != null">
+                region_id = #{regionId},
+            </if>
+            <if test="isNewGoods != null">
+                is_new_goods = #{isNewGoods},
+            </if>
+            <if test="email != null and email != ''">
+                email = #{email},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from schedule_statistic_order_refund where id = #{id}
+    </delete>
+
+    <select id="getPurchaseRefundData" resultMap="purchaseRefundData">
+        SELECT t.*
+        ,SUM(if(rog.shipping_time <![CDATA[ >= ]]> t.first_inv_time and rog.shipping_time <![CDATA[ < ]]> date_add(t.first_inv_time,interval 30 day),rog.refund_goods_number,0)) as `day_refund_goods_number30`
+        ,SUM(if(rog.shipping_time <![CDATA[ >= ]]> t.first_inv_time and rog.shipping_time <![CDATA[ < ]]> date_add(t.first_inv_time,interval 60 day),rog.refund_goods_number,0)) as `day_refund_goods_number60`
+        ,SUM(if(rog.shipping_time <![CDATA[ >= ]]> t.first_inv_time and rog.shipping_time <![CDATA[ < ]]> date_add(t.first_inv_time,interval 90 day),rog.refund_goods_number,0)) as `day_refund_goods_number90`
+        from (SELECT
+        bgpr.order_sn
+        ,(select min(dl.inv_time) from eris.delivery_list_detail as dld
+        inner join  eris.delivery_list as dl on dl.delivery_sn = dld.delivery_sn
+        where dld.order_sn= bgpr.order_sn and dl.status ='finished' ) as first_inv_time
+        from ecshop.batch_goods_purchase_request bgpr
+        inner join ecshop.ecs_goods eg on  bgpr.uniq_sku = eg.uniq_sku
+        where bgpr.request_status != 'C'
+        and eg.external_cat_id = 295
+        and eg.goods_party_id  in('65545','65564','65567','65578','65579')
+        and bgpr.create_time <![CDATA[ >= ]]> #{startTime} and bgpr.create_time <![CDATA[ < ]]>#{endTime})  as t
+        LEFT join ecshop.schedule_statistic_order_refund as rog on t.order_sn= rog.purchase_sn
+        LEFT join ecshop.order_attribute oa   on  oa.order_id  = rog.order_id   and oa.attr_name = 'extra_source' and oa.attr_value ='amazon'
+        where oa.order_id is null
+        AND rog.refund_execute_date <![CDATA[ >= ]]>rog.shipping_time
+        AND rog.refund_execute_date <![CDATA[ <= ]]> from_unixtime(UNIX_TIMESTAMP(rog.shipping_time) + 2592000)
+        AND ( rog.facility_id is null or rog.facility_id in('30246773','369258324'))
+        AND (rog.email is null or (rog.email not in(
+        'influencer@tetx.com',
+        'snsorder@tetx.com',
+        'snsorder.bell@tetx.com',
+        'snsorder.minyu@tetx.com',
+        'snsorder.denisse@tetx.com',
+        'snsorder.viorica@tetx.com')
+        AND right(rog.email,8) != 'tetx.com'
+        AND right(rog.email,8) != 'i9i8.com'
+        AND right(rog.email,8) != 'ylan.com'))
+        GROUP by t.order_sn
+    </select>
+    <select id="getDispatchRefundData" resultMap="dispatchRefundData">
+        SELECT t.*
+        ,SUM(if(rog.shipping_time <![CDATA[ >= ]]> t.first_inv_time and rog.shipping_time <![CDATA[ < ]]> date_add(t.first_inv_time,interval 30 day),rog.refund_goods_number ,0)) as `day_refund_goods_number30`
+        ,SUM(if(rog.shipping_time <![CDATA[ >= ]]> t.first_inv_time and rog.shipping_time <![CDATA[ < ]]> date_add(t.first_inv_time,interval 60 day),rog.refund_goods_number,0)) as `day_refund_goods_number60`
+        ,SUM(if(rog.shipping_time <![CDATA[ >= ]]> t.first_inv_time and rog.shipping_time <![CDATA[ < ]]> date_add(t.first_inv_time,interval 90 day),rog.refund_goods_number,0)) as `day_refund_goods_number90`
+        from (SELECT
+        bgpr.dispatch_sn
+        ,(select min(dl3.FINISHED_DATE) FROM ecshop.stock_plan_formal_dispatch AS  bgpr2
+        inner join romeo.dispatch_list dl3   on  dl3.DISPATCH_SN  = bgpr2.DISPATCH_SN
+        where bgpr.order_sn= bgpr2.order_sn and dl3.DISPATCH_STATUS_ID ='FINISHED' ) as first_inv_time
+        from ecshop.stock_plan_formal_dispatch bgpr
+        inner join romeo.dispatch_list dl2   on  dl2.DISPATCH_SN  = bgpr.DISPATCH_SN
+        inner join ecshop.ecs_goods eg on  bgpr.uniq_sku = eg.uniq_sku
+        where dl2.DISPATCH_STATUS_ID = 'FINISHED'
+        and eg.external_cat_id = 295
+        and eg.goods_party_id  in('65545','65564','65567','65578','65579')
+        and bgpr.create_time <![CDATA[ >= ]]> #{startTime} and  bgpr.create_time <![CDATA[ < ]]> #{endTime})
+         as t
+        LEFT join ecshop.schedule_statistic_order_refund  as rog on t.dispatch_sn= rog.purchase_sn
+        left join ecshop.order_attribute oa   on  oa.order_id  = rog.order_id   and oa.attr_name = 'extra_source' and oa.attr_value ='amazon'
+        where oa.order_id is null
+        AND rog.refund_execute_date <![CDATA[ >= ]]> rog.shipping_time
+        AND rog.refund_execute_date <![CDATA[ <= ]]> from_unixtime(UNIX_TIMESTAMP(rog.shipping_time) + 2592000)
+        AND ( rog.facility_id is null or rog.facility_id in('30246773','369258324'))
+        AND (rog.email is null or (rog.email not in(
+        'influencer@tetx.com',
+        'snsorder@tetx.com',
+        'snsorder.bell@tetx.com',
+        'snsorder.minyu@tetx.com',
+        'snsorder.denisse@tetx.com',
+        'snsorder.viorica@tetx.com')
+        AND right(rog.email,8) != 'tetx.com'
+        AND right(rog.email,8) != 'i9i8.com'
+        AND right(rog.email,8) != 'ylan.com'))
+        GROUP by t.dispatch_sn
+    </select>
+
+</mapper>
+

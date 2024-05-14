@@ -1,0 +1,73 @@
+server:
+  port: 8766
+spring:
+  application:
+    name: eureka-consumer
+  cloud:
+    config:
+      uri: http://localhost:8769/
+      name: config-client # 在git上读取的资源名称
+      profile: default  # 访问环境
+      label: master # 访问分支
+  datasource:
+    dynamic:
+      primary: slave
+      strict: true
+      datasource:
+        master:
+          url: jdbc:mysql://10.50.5.66:55193/ecshop?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&useSSL=false
+          username: xfang
+          password: shanghaijiayou
+
+        slave:
+          url: jdbc:mysql://localhost:3306/jjs_mall?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&useSSL=false
+          username: root
+          password: root
+
+
+  elasticsearch:
+    uris: localhost:9200
+    socket-timeout: 30s
+    connection-timeout: 5s
+
+  redis:
+    database: 0
+    host: localhost
+    port: 6379
+    lettuce:
+      pool:
+        max-active: 8
+        max-wait: -1ms
+        max-idle: 8
+        min-idle: 0
+      shutdown-timeout: 100ms
+
+jwt:
+  tokenHeader: Authorization #JWT存储的请求头
+  secret: mall-admin-secret #JWT加解密使用的密钥
+  expiration: 604800 #JWT的超期限时间(60*60*24*7)
+  tokenHead: 'Bearer '  #JWT负载中拿到开头
+
+mybatis-plus:
+  mapper-locations:
+    - classpath:mapper/*.xml
+  configuration:
+    cache-enabled: true
+    use-generated-keys: true
+    default-executor-type: REUSE
+    use-actual-param-name: true
+logging:
+  file:
+    path: ./log/
+    name: my.log
+cache:
+  default:
+    expire-time: 200
+  user:
+    expire-time: 200
+    name: test
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka

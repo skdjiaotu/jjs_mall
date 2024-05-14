@@ -1,0 +1,451 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.eurekaconsumer.dao.ScheduleStatisticOrderGoodsMapper">
+    <resultMap type="com.example.eurekaconsumer.entity.ScheduleStatisticOrderGoods" id="ScheduleStatisticOrderGoodsMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="orderId" column="order_id" jdbcType="INTEGER"/>
+        <result property="orderGoodsId" column="order_goods_id" jdbcType="VARCHAR"/>
+        <result property="purchaseSn" column="purchase_sn" jdbcType="VARCHAR"/>
+        <result property="taobaoOrderSn" column="taobao_order_sn" jdbcType="VARCHAR"/>
+        <result property="shippingTime" column="shipping_time" jdbcType="TIMESTAMP"/>
+        <result property="goodsSize" column="goods_size" jdbcType="VARCHAR"/>
+        <result property="goodsColor" column="goods_color" jdbcType="VARCHAR"/>
+        <result property="uniqSku" column="uniq_sku" jdbcType="VARCHAR"/>
+        <result property="externalGoodsId" column="external_goods_id" jdbcType="INTEGER"/>
+        <result property="externalCatId" column="external_cat_id" jdbcType="INTEGER"/>
+        <result property="goodsNumber" column="goods_number" jdbcType="INTEGER"/>
+        <result property="goodsPrice" column="goods_price" jdbcType="NUMERIC"/>
+        <result property="regionName" column="region_name" jdbcType="VARCHAR"/>
+        <result property="sourceId" column="source_id" jdbcType="INTEGER"/>
+        <result property="orderTime" column="order_time" jdbcType="TIMESTAMP"/>
+        <result property="providerId" column="provider_id" jdbcType="INTEGER"/>
+        <result property="isDispatch" column="is_dispatch" jdbcType="INTEGER"/>
+        <result property="facilityId" column="facility_id" jdbcType="VARCHAR"/>
+        <result property="partyId" column="party_id" jdbcType="VARCHAR"/>
+        <result property="fromDomain" column="from_domain" jdbcType="VARCHAR"/>
+        <result property="currency" column="currency" jdbcType="VARCHAR"/>
+        <result property="regionId" column="region_id" jdbcType="INTEGER"/>
+        <result property="isNewGoods" column="is_new_goods" jdbcType="INTEGER"/>
+        <result property="email" column="email" jdbcType="VARCHAR"/>
+    </resultMap>
+    <resultMap type="com.example.eurekaconsumer.dto.PurchaseShipmentData" id="purchaseShipmentData">
+        <result property="externalGoodsId" column="external_goods_id" jdbcType="INTEGER"/>
+        <result property="externalCatId" column="external_cat_id" jdbcType="INTEGER"/>
+        <result property="goodsPartyId" column="goods_party_id" jdbcType="INTEGER"/>
+        <result property="providerId" column="provider_id" jdbcType="INTEGER"/>
+        <result property="orderSn" column="order_sn" jdbcType="VARCHAR"/>
+        <result property="stockSequence" column="stock_sequence" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="quantity" column="quantity" jdbcType="INTEGER"/>
+        <result property="requestStatus" column="request_status" jdbcType="VARCHAR"/>
+        <result property="inQuantity" column="in_quantity" jdbcType="INTEGER"/>
+        <result property="providerCode" column="provider_code" jdbcType="VARCHAR"/>
+        <result property="dayShipmentNum30" column="day_shipment_num30" jdbcType="INTEGER"/>
+        <result property="dayShipmentNum60" column="day_shipment_num60" jdbcType="INTEGER"/>
+        <result property="dayShipmentNum90" column="day_shipment_num90" jdbcType="INTEGER"/>
+    </resultMap>
+    <resultMap type="com.example.eurekaconsumer.dto.DispatchShipmentData" id="dispatchShipmentData">
+        <result property="externalGoodsId" column="external_goods_id"  jdbcType="INTEGER"/>
+        <result property="externalCatId" column="external_cat_id"  jdbcType="INTEGER"/>
+        <result property="goodsPartyId" column="goods_party_id"  jdbcType="INTEGER"/>
+        <result property="providerId" column="provider_id"  jdbcType="INTEGER"/>
+        <result property="providerCode" column="provider_code"  jdbcType="VARCHAR"/>
+        <result property="dispatchSn" column="dispatch_sn"  jdbcType="VARCHAR"/>
+        <result property="orderSn" column="order_sn"  jdbcType="VARCHAR"/>
+        <result property="stockSequence" column="stock_sequence"  jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time"  jdbcType="TIMESTAMP"/>
+        <result property="quantity" column="quantity"  jdbcType="INTEGER"/>
+        <result property="requestStatus" column="request_status"  jdbcType="VARCHAR"/>
+        <result property="inTime" column="in_time"  jdbcType="TIMESTAMP"/>
+        <result property="inQuantity" column="in_quantity"  jdbcType="INTEGER"/>
+        <result property="firstInvTime" column="first_inv_time"  jdbcType="TIMESTAMP"/>
+        <result property="dayShipmentNum30" column="day_shipment_num30" jdbcType="INTEGER"/>
+        <result property="dayShipmentNum60" column="day_shipment_num60" jdbcType="INTEGER"/>
+        <result property="dayShipmentNum90" column="day_shipment_num90" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <select id="queryAllByLimit" resultMap="ScheduleStatisticOrderGoodsMap">
+        select
+        id, order_id, order_goods_id, purchase_sn, taobao_order_sn, shipping_time, goods_size, goods_color, uniq_sku, external_goods_id, external_cat_id, goods_number, goods_price, region_name, source_id, order_time, provider_id, is_dispatch, facility_id, party_id, from_domain, currency, region_id, is_new_goods, email
+        from schedule_statistic_order_goods
+        <where>
+            <if test="scheduleStatisticOrderGoods.id != null">
+                and id = #{scheduleStatisticOrderGoods.id}
+            </if>
+            <if test="scheduleStatisticOrderGoods.orderId != null">
+                and order_id = #{scheduleStatisticOrderGoods.orderId}
+            </if>
+            <if test="scheduleStatisticOrderGoods.orderGoodsId != null and scheduleStatisticOrderGoods.orderGoodsId != ''">
+                and order_goods_id = #{scheduleStatisticOrderGoods.orderGoodsId}
+            </if>
+            <if test="scheduleStatisticOrderGoods.purchaseSn != null and scheduleStatisticOrderGoods.purchaseSn != ''">
+                and purchase_sn = #{scheduleStatisticOrderGoods.purchaseSn}
+            </if>
+            <if test="scheduleStatisticOrderGoods.taobaoOrderSn != null and scheduleStatisticOrderGoods.taobaoOrderSn != ''">
+                and taobao_order_sn = #{scheduleStatisticOrderGoods.taobaoOrderSn}
+            </if>
+            <if test="scheduleStatisticOrderGoods.shippingTime != null">
+                and shipping_time = #{scheduleStatisticOrderGoods.shippingTime}
+            </if>
+            <if test="scheduleStatisticOrderGoods.goodsSize != null and scheduleStatisticOrderGoods.goodsSize != ''">
+                and goods_size = #{scheduleStatisticOrderGoods.goodsSize}
+            </if>
+            <if test="scheduleStatisticOrderGoods.goodsColor != null and scheduleStatisticOrderGoods.goodsColor != ''">
+                and goods_color = #{scheduleStatisticOrderGoods.goodsColor}
+            </if>
+            <if test="scheduleStatisticOrderGoods.uniqSku != null and scheduleStatisticOrderGoods.uniqSku != ''">
+                and uniq_sku = #{scheduleStatisticOrderGoods.uniqSku}
+            </if>
+            <if test="scheduleStatisticOrderGoods.externalGoodsId != null">
+                and external_goods_id = #{scheduleStatisticOrderGoods.externalGoodsId}
+            </if>
+            <if test="scheduleStatisticOrderGoods.externalCatId != null">
+                and external_cat_id = #{scheduleStatisticOrderGoods.externalCatId}
+            </if>
+            <if test="scheduleStatisticOrderGoods.goodsNumber != null">
+                and goods_number = #{scheduleStatisticOrderGoods.goodsNumber}
+            </if>
+            <if test="scheduleStatisticOrderGoods.goodsPrice != null">
+                and goods_price = #{scheduleStatisticOrderGoods.goodsPrice}
+            </if>
+            <if test="scheduleStatisticOrderGoods.regionName != null and scheduleStatisticOrderGoods.regionName != ''">
+                and region_name = #{scheduleStatisticOrderGoods.regionName}
+            </if>
+            <if test="scheduleStatisticOrderGoods.sourceId != null">
+                and source_id = #{scheduleStatisticOrderGoods.sourceId}
+            </if>
+            <if test="scheduleStatisticOrderGoods.orderTime != null">
+                and order_time = #{scheduleStatisticOrderGoods.orderTime}
+            </if>
+            <if test="scheduleStatisticOrderGoods.providerId != null">
+                and provider_id = #{scheduleStatisticOrderGoods.providerId}
+            </if>
+            <if test="scheduleStatisticOrderGoods.isDispatch != null">
+                and is_dispatch = #{scheduleStatisticOrderGoods.isDispatch}
+            </if>
+            <if test="scheduleStatisticOrderGoods.facilityId != null and scheduleStatisticOrderGoods.facilityId != ''">
+                and facility_id = #{scheduleStatisticOrderGoods.facilityId}
+            </if>
+            <if test="scheduleStatisticOrderGoods.partyId != null and scheduleStatisticOrderGoods.partyId != ''">
+                and party_id = #{scheduleStatisticOrderGoods.partyId}
+            </if>
+            <if test="scheduleStatisticOrderGoods.fromDomain != null and scheduleStatisticOrderGoods.fromDomain != ''">
+                and from_domain = #{scheduleStatisticOrderGoods.fromDomain}
+            </if>
+            <if test="scheduleStatisticOrderGoods.currency != null and scheduleStatisticOrderGoods.currency != ''">
+                and currency = #{scheduleStatisticOrderGoods.currency}
+            </if>
+            <if test="scheduleStatisticOrderGoods.regionId != null">
+                and region_id = #{scheduleStatisticOrderGoods.regionId}
+            </if>
+            <if test="scheduleStatisticOrderGoods.isNewGoods != null">
+                and is_new_goods = #{scheduleStatisticOrderGoods.isNewGoods}
+            </if>
+            <if test="scheduleStatisticOrderGoods.email != null and scheduleStatisticOrderGoods.email != ''">
+                and email = #{scheduleStatisticOrderGoods.email}
+            </if>
+        </where>
+        limit #{page}, #{pageSize}
+    </select>
+
+    <select id="count" resultType="java.lang.Long">
+        select count(1)
+        from schedule_statistic_order_goods
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="orderId != null">
+                and order_id = #{orderId}
+            </if>
+            <if test="orderGoodsId != null and orderGoodsId != ''">
+                and order_goods_id = #{orderGoodsId}
+            </if>
+            <if test="purchaseSn != null and purchaseSn != ''">
+                and purchase_sn = #{purchaseSn}
+            </if>
+            <if test="taobaoOrderSn != null and taobaoOrderSn != ''">
+                and taobao_order_sn = #{taobaoOrderSn}
+            </if>
+            <if test="shippingTime != null">
+                and shipping_time = #{shippingTime}
+            </if>
+            <if test="goodsSize != null and goodsSize != ''">
+                and goods_size = #{goodsSize}
+            </if>
+            <if test="goodsColor != null and goodsColor != ''">
+                and goods_color = #{goodsColor}
+            </if>
+            <if test="uniqSku != null and uniqSku != ''">
+                and uniq_sku = #{uniqSku}
+            </if>
+            <if test="externalGoodsId != null">
+                and external_goods_id = #{externalGoodsId}
+            </if>
+            <if test="externalCatId != null">
+                and external_cat_id = #{externalCatId}
+            </if>
+            <if test="goodsNumber != null">
+                and goods_number = #{goodsNumber}
+            </if>
+            <if test="goodsPrice != null">
+                and goods_price = #{goodsPrice}
+            </if>
+            <if test="regionName != null and regionName != ''">
+                and region_name = #{regionName}
+            </if>
+            <if test="sourceId != null">
+                and source_id = #{sourceId}
+            </if>
+            <if test="orderTime != null">
+                and order_time = #{orderTime}
+            </if>
+            <if test="providerId != null">
+                and provider_id = #{providerId}
+            </if>
+            <if test="isDispatch != null">
+                and is_dispatch = #{isDispatch}
+            </if>
+            <if test="facilityId != null and facilityId != ''">
+                and facility_id = #{facilityId}
+            </if>
+            <if test="partyId != null and partyId != ''">
+                and party_id = #{partyId}
+            </if>
+            <if test="fromDomain != null and fromDomain != ''">
+                and from_domain = #{fromDomain}
+            </if>
+            <if test="currency != null and currency != ''">
+                and currency = #{currency}
+            </if>
+            <if test="regionId != null">
+                and region_id = #{regionId}
+            </if>
+            <if test="isNewGoods != null">
+                and is_new_goods = #{isNewGoods}
+            </if>
+            <if test="email != null and email != ''">
+                and email = #{email}
+            </if>
+        </where>
+    </select>
+
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into schedule_statistic_order_goods(order_id, order_goods_id, purchase_sn, taobao_order_sn, shipping_time, goods_size, goods_color, uniq_sku, external_goods_id, external_cat_id, goods_number, goods_price, region_name, source_id, order_time, provider_id, is_dispatch, facility_id, party_id, from_domain, currency, region_id, is_new_goods, email)
+        values (#{orderId}, #{orderGoodsId}, #{purchaseSn}, #{taobaoOrderSn}, #{shippingTime}, #{goodsSize}, #{goodsColor}, #{uniqSku}, #{externalGoodsId}, #{externalCatId}, #{goodsNumber}, #{goodsPrice}, #{regionName}, #{sourceId}, #{orderTime}, #{providerId}, #{isDispatch}, #{facilityId}, #{partyId}, #{fromDomain}, #{currency}, #{regionId}, #{isNewGoods}, #{email})
+    </insert>
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into schedule_statistic_order_goods(order_id, order_goods_id, purchase_sn, taobao_order_sn, shipping_time, goods_size, goods_color, uniq_sku, external_goods_id, external_cat_id, goods_number, goods_price, region_name, source_id, order_time, provider_id, is_dispatch, facility_id, party_id, from_domain, currency, region_id, is_new_goods, email)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.orderId}, #{entity.orderGoodsId}, #{entity.purchaseSn}, #{entity.taobaoOrderSn}, #{entity.shippingTime}, #{entity.goodsSize}, #{entity.goodsColor}, #{entity.uniqSku}, #{entity.externalGoodsId}, #{entity.externalCatId}, #{entity.goodsNumber}, #{entity.goodsPrice}, #{entity.regionName}, #{entity.sourceId}, #{entity.orderTime}, #{entity.providerId}, #{entity.isDispatch}, #{entity.facilityId}, #{entity.partyId}, #{entity.fromDomain}, #{entity.currency}, #{entity.regionId}, #{entity.isNewGoods}, #{entity.email})
+        </foreach>
+    </insert>
+    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into schedule_statistic_order_goods(order_id, order_goods_id, purchase_sn, taobao_order_sn, shipping_time, goods_size, goods_color, uniq_sku, external_goods_id, external_cat_id, goods_number, goods_price, region_name, source_id, order_time, provider_id, is_dispatch, facility_id, party_id, from_domain, currency, region_id, is_new_goods, email)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.orderId}, #{entity.orderGoodsId}, #{entity.purchaseSn}, #{entity.taobaoOrderSn}, #{entity.shippingTime}, #{entity.goodsSize}, #{entity.goodsColor}, #{entity.uniqSku}, #{entity.externalGoodsId}, #{entity.externalCatId}, #{entity.goodsNumber}, #{entity.goodsPrice}, #{entity.regionName}, #{entity.sourceId}, #{entity.orderTime}, #{entity.providerId}, #{entity.isDispatch}, #{entity.facilityId}, #{entity.partyId}, #{entity.fromDomain}, #{entity.currency}, #{entity.regionId}, #{entity.isNewGoods}, #{entity.email})
+        </foreach>
+        on duplicate key update
+        order_id = values(order_id),
+        order_goods_id = values(order_goods_id),
+        purchase_sn = values(purchase_sn),
+        taobao_order_sn = values(taobao_order_sn),
+        shipping_time = values(shipping_time),
+        goods_size = values(goods_size),
+        goods_color = values(goods_color),
+        uniq_sku = values(uniq_sku),
+        external_goods_id = values(external_goods_id),
+        external_cat_id = values(external_cat_id),
+        goods_number = values(goods_number),
+        goods_price = values(goods_price),
+        region_name = values(region_name),
+        source_id = values(source_id),
+        order_time = values(order_time),
+        provider_id = values(provider_id),
+        is_dispatch = values(is_dispatch),
+        facility_id = values(facility_id),
+        party_id = values(party_id),
+        from_domain = values(from_domain),
+        currency = values(currency),
+        region_id = values(region_id),
+        is_new_goods = values(is_new_goods),
+        email = values(email)
+    </insert>
+    <update id="update">
+        update schedule_statistic_order_goods
+        <set>
+            <if test="orderId != null">
+                order_id = #{orderId},
+            </if>
+            <if test="orderGoodsId != null and orderGoodsId != ''">
+                order_goods_id = #{orderGoodsId},
+            </if>
+            <if test="purchaseSn != null and purchaseSn != ''">
+                purchase_sn = #{purchaseSn},
+            </if>
+            <if test="taobaoOrderSn != null and taobaoOrderSn != ''">
+                taobao_order_sn = #{taobaoOrderSn},
+            </if>
+            <if test="shippingTime != null">
+                shipping_time = #{shippingTime},
+            </if>
+            <if test="goodsSize != null and goodsSize != ''">
+                goods_size = #{goodsSize},
+            </if>
+            <if test="goodsColor != null and goodsColor != ''">
+                goods_color = #{goodsColor},
+            </if>
+            <if test="uniqSku != null and uniqSku != ''">
+                uniq_sku = #{uniqSku},
+            </if>
+            <if test="externalGoodsId != null">
+                external_goods_id = #{externalGoodsId},
+            </if>
+            <if test="externalCatId != null">
+                external_cat_id = #{externalCatId},
+            </if>
+            <if test="goodsNumber != null">
+                goods_number = #{goodsNumber},
+            </if>
+            <if test="goodsPrice != null">
+                goods_price = #{goodsPrice},
+            </if>
+            <if test="regionName != null and regionName != ''">
+                region_name = #{regionName},
+            </if>
+            <if test="sourceId != null">
+                source_id = #{sourceId},
+            </if>
+            <if test="orderTime != null">
+                order_time = #{orderTime},
+            </if>
+            <if test="providerId != null">
+                provider_id = #{providerId},
+            </if>
+            <if test="isDispatch != null">
+                is_dispatch = #{isDispatch},
+            </if>
+            <if test="facilityId != null and facilityId != ''">
+                facility_id = #{facilityId},
+            </if>
+            <if test="partyId != null and partyId != ''">
+                party_id = #{partyId},
+            </if>
+            <if test="fromDomain != null and fromDomain != ''">
+                from_domain = #{fromDomain},
+            </if>
+            <if test="currency != null and currency != ''">
+                currency = #{currency},
+            </if>
+            <if test="regionId != null">
+                region_id = #{regionId},
+            </if>
+            <if test="isNewGoods != null">
+                is_new_goods = #{isNewGoods},
+            </if>
+            <if test="email != null and email != ''">
+                email = #{email},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+    <delete id="deleteById">
+        delete from schedule_statistic_order_goods where id = #{id}
+    </delete>
+
+    <select id="getPurchaseShipmentData" resultMap="purchaseShipmentData">
+        SELECT t.*
+        ,SUM(if(rog.shipping_time <![CDATA[ >= ]]> t.first_inv_time and rog.shipping_time <![CDATA[ < ]]> date_add(t.first_inv_time,interval 30 day),rog.goods_number,0)) as `day_shipment_num30`
+        ,SUM(if(rog.shipping_time <![CDATA[ >= ]]> t.first_inv_time and rog.shipping_time <![CDATA[ < ]]>  date_add(t.first_inv_time,interval 60 day),rog.goods_number,0)) as `day_shipment_num60`
+        ,SUM(if(rog.shipping_time <![CDATA[ >= ]]> t.first_inv_time and rog.shipping_time <![CDATA[ < ]]>  date_add(t.first_inv_time,interval 90 day),rog.goods_number,0)) as `day_shipment_num90`
+        from (SELECT
+        bgpr.external_goods_id
+        ,eg.external_cat_id
+        ,eg.goods_party_id
+        ,bgpr.provider_id
+        ,bgpr.order_sn
+        ,bgpr.stock_sequence
+        ,bgpr.create_time
+        ,bgpr.quantity
+        ,bgpr.request_status
+        ,bgpr.in_time
+        ,bgpr.in_quantity
+        ,ep.provider_code
+        ,(select min(dl.inv_time) from eris.delivery_list_detail as dld
+        inner join  eris.delivery_list as dl on dl.delivery_sn = dld.delivery_sn
+        where dld.order_sn= bgpr.order_sn and dl.status ='finished' ) as first_inv_time
+        from ecshop.batch_goods_purchase_request bgpr
+        inner join ecshop.ecs_goods eg on  bgpr.uniq_sku = eg.uniq_sku
+        inner join ecshop.ecs_provider  as ep  on bgpr.provider_id = ep.provider_id
+        where bgpr.request_status != 'C'
+        and bgpr.create_time <![CDATA[ >= ]]> #{startTime} and bgpr.create_time <![CDATA[ < ]]> #{endTime}
+        and eg.external_cat_id = 295
+        and eg.goods_party_id  in('65545','65564','65567','65578','65579')
+        )  as t
+        LEFT join ecshop.schedule_statistic_order_goods as rog on t.order_sn= rog.purchase_sn
+        LEFT join ecshop.order_attribute oa   on  oa.order_id  = rog.order_id   and oa.attr_name = 'extra_source' and oa.attr_value ='amazon'
+        where oa.order_id is null
+        AND ( rog.facility_id is null or rog.facility_id in('30246773','369258324'))
+        AND (rog.email is null or (rog.email not in(
+        'influencer@tetx.com',
+        'snsorder@tetx.com',
+        'snsorder.bell@tetx.com',
+        'snsorder.minyu@tetx.com',
+        'snsorder.denisse@tetx.com',
+        'snsorder.viorica@tetx.com')
+        AND right(rog.email,8) != 'tetx.com'
+        AND right(rog.email,8) != 'i9i8.com'
+        AND right(rog.email,8) != 'ylan.com'))
+        GROUP by t.order_sn
+    </select>
+
+    <select id="getDispatchOrderShipmentData" resultMap="dispatchShipmentData">
+        SELECT t.*
+        ,SUM(if(rog.shipping_time <![CDATA[ >= ]]> t.first_inv_time and rog.shipping_time <![CDATA[ < ]]> date_add(t.first_inv_time,interval 30 day),rog.goods_number,0)) as `day_shipment_num30`
+        ,SUM(if(rog.shipping_time <![CDATA[ >= ]]> t.first_inv_time and rog.shipping_time <![CDATA[ < ]]> date_add(t.first_inv_time,interval 60 day),rog.goods_number,0)) as `day_shipment_num60`
+        ,SUM(if(rog.shipping_time <![CDATA[ >= ]]> t.first_inv_time and rog.shipping_time <![CDATA[ < ]]> date_add(t.first_inv_time,interval 90 day),rog.goods_number,0)) as `day_shipment_num90`
+        from (SELECT
+        eg.external_goods_id
+        ,eg.external_cat_id
+        ,eg.goods_party_id
+        ,dl2.PROVIDER_ID
+        ,ep.provider_code
+        ,bgpr.dispatch_sn
+        ,bgpr.order_sn
+        ,bgpr.stock_sequence
+        ,bgpr.create_time
+        , 1 as quantity
+        ,dl2.DISPATCH_STATUS_ID as request_status
+        ,dl2.FINISHED_DATE as  in_time
+        ,1 as in_quantity
+        ,(select min(dl3.FINISHED_DATE) FROM ecshop.stock_plan_formal_dispatch AS  bgpr2
+        inner join romeo.dispatch_list dl3   on  dl3.DISPATCH_SN  = bgpr2.DISPATCH_SN
+        where bgpr.order_sn= bgpr2.order_sn and dl3.DISPATCH_STATUS_ID ='FINISHED' ) as first_inv_time
+        from ecshop.stock_plan_formal_dispatch bgpr
+        inner join romeo.dispatch_list dl2   on  dl2.DISPATCH_SN  = bgpr.DISPATCH_SN
+        inner join ecshop.ecs_goods eg on  bgpr.uniq_sku = eg.uniq_sku
+        inner join ecshop.ecs_provider as ep  on dl2.PROVIDER_ID  = ep.provider_id
+        where dl2.DISPATCH_STATUS_ID = 'FINISHED'
+        and eg.external_cat_id = 295
+        and bgpr.create_time <![CDATA[ >= ]]>#{startTime} and bgpr.create_time <![CDATA[ < ]]> #{endTime}
+        and eg.goods_party_id  in('65545','65564','65567','65578','65579'))
+        as t
+        LEFT join ecshop.schedule_statistic_order_goods as rog on t.dispatch_sn= rog.purchase_sn
+        LEFT join ecshop.order_attribute oa   on  oa.order_id  = rog.order_id   and oa.attr_name = 'extra_source' and oa.attr_value ='amazon'
+        where oa.order_id is null
+        AND ( rog.facility_id is null or rog.facility_id in('30246773','369258324'))
+        AND ( rog.email is null or (rog.email not in(
+        'influencer@tetx.com',
+        'snsorder@tetx.com',
+        'snsorder.bell@tetx.com',
+        'snsorder.minyu@tetx.com',
+        'snsorder.denisse@tetx.com',
+        'snsorder.viorica@tetx.com')
+        AND right(rog.email,8) != 'tetx.com'
+        AND right(rog.email,8) != 'i9i8.com'
+        AND right(rog.email,8) != 'ylan.com'))
+        GROUP by t.dispatch_sn
+    </select>
+</mapper>
